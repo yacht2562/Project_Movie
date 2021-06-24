@@ -1,12 +1,8 @@
 var inputText = document.getElementById('inputText')
 
-document.getElementById('seacrhButton').addEventListener('click', (event)=> {
-    let id =document.getElementById('inputText').value
-    fetch('https://api.jikan.moe/v3/search/anime?q=naruto')
-    .then((repsonse) => {
-        return repsonse.json()
-    })
-})
+// document.getElementById('seacrhButton').addEventListener('click', (event)=> {
+ 
+// })
 
 function addMovieData(movie){
     let idElem = document.getElementById('id')
@@ -29,11 +25,11 @@ function onLoad(){
     .then((response) => {
         return response.json()
     }).then(data => {
-        addMovieData(data)
+       addMovieList(data)
     })
 }
 
-function addMovieToCard(){
+function addMovieToCard(movie){
     let card = document.createElement('div')
     card.setAttribute('class', 'card col-3')
     let image = document.createElement('img')
@@ -53,8 +49,26 @@ function addMovieToCard(){
     link.setAttribute('class','btn btn-primary')
     card.appendChild(image,cardBody)
     cardBody.appendChild(cardTitle,cardText,score,link)
+    cardTitle.innerHTML = movie.title
+    image.setAttribute('src', movie.image_url)
+    cardText.innerHTML = movie.synopsis
+    score.innerHTML = movie.score
+    link.setAttribute('href', movie.url)
+    
     
     
   
 
+}
+
+
+function addMovieList(datas){
+    let f = Object.values(datas)
+    let movieList = Object.values(f[3])
+    let movieListdata = Object.values(movieList)
+    let movielistdatas = Object.values(movieListdata)
+     for (movie of movielistdatas){
+         addMovieToCard(movie)
+        
+     }
 }
