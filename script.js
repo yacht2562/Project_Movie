@@ -3,6 +3,7 @@ var inputText = document.getElementById('inputText')
 
 document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
     let id = document.getElementById('inputText').value
+    hideall()
     if(id == ''){
         alert("Please insert movie")
     }else{       
@@ -11,7 +12,8 @@ document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
         return response.json();   
     })
        .then(data => {
-            hideall()
+           console.log(id)
+            
             addMovieList(data)
 
         })
