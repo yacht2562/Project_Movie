@@ -7,12 +7,11 @@ document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
     if(id == ''){
         alert("Please insert movie")
     }else{       
-    fetch('https://api.jikan.moe/v3/search/anime?q=${id}')
+    fetch(`https://api.jikan.moe/v3/search/anime?q=${id}`)
     .then((response) => {
         return response.json();   
     })
        .then(data => {
-           console.log(id)
            addMovieList(data)
 
         })
@@ -66,6 +65,7 @@ function addMovieToCard(movie) {
     content.setAttribute('id','content')
     let card = document.createElement('div')
     card.setAttribute('class', 'card col-3 m-3 pe-auto')
+    card.setAttribute('id', 'card')
     card.style.width = "18rem"
     let image = document.createElement('img')
     image.setAttribute('class', 'card-img-top mt-2')
@@ -122,17 +122,19 @@ function addMovietoList() {
     addMovietoDB(movie)
 }
 
-document.querySelector(".card").addEventListener("dblclick", event => {
+document.getElementById('card').addEventListener("dblclick", (event) => {
+    console.log("target:", event.target);
+    console.log("currentTarget:", event.currentTarget);
     let answer = confirm('Do you want add this movie')
     if(answer == ture){
         addMovietoList();
-    
+        
     
     }
   });
 
 function addMovietoDB(movie) {
-    fetch('https://se104-project-backend.du.r.appspot.com/movies',{
+    fetch(`https://se104-project-backend.du.r.appspot.com/movies`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -149,7 +151,7 @@ function addMovietoDB(movie) {
 
 
 function showMylist(){
-    fetch('https://se104-project-backend.du.r.appspot.com/movies/632110333')
+    fetch(`https://se104-project-backend.du.r.appspot.com/movies/632110333`)
     .then((response) => {
         return response.json()
     }).then(data => {
