@@ -1,22 +1,19 @@
 var inputText = document.getElementById('inputText')
 
 
-document.getElementById('seacrhButton').addEventListener('click', () => {
+document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
     let id = document.getElementById('inputText').value
     if(id == ''){
         alert("Please insert movie")
-    }else{
-        console.log(id)
-            
+    }else{       
     fetch('https://api.jikan.moe/v3/search/anime?q=${id}')
     .then((response) => {
-        return response.json();
-        
+        return response.json();   
     })
        .then(data => {
-            console.log(data)
+            hideall()
             addMovieList(data)
-       
+
         })
     }
 })
@@ -24,7 +21,16 @@ document.getElementById('seacrhButton').addEventListener('click', () => {
 
 
 
+function hideall(){
+    let element = document.getElementById('content')
+    element.innerHTML = ''
 
+}
+
+function showAll(){
+    let element = document.getElementById('content')
+    element.style.display = 'block'
+}
 function addMovieData(movie) {
     let nameElem = document.getElementById('name')
     nameElem.innerHTML = movie.title
@@ -49,14 +55,13 @@ function onLoad() {
 }
 
 function addMovieToCard(movie) {
-
-
     let card = document.createElement('div')
     card.setAttribute('class', 'card col-3 m-3 pe-auto')
     card.setAttribute('ondbclick', 'addMovietoDB()')
     card.style.width = "18rem"
     let image = document.createElement('img')
     image.setAttribute('class', 'card-img-top mt-2')
+    image.setAttribute('ondbclick', 'addMovietoDB()')
     let cardBody = document.createElement('div')
     cardBody.setAttribute('class', 'card-body')
     let cardTitle = document.createElement('h5')
@@ -99,7 +104,7 @@ function addMovieList(datas) {
     }
 }
 
-function addMovietoList(id) {
+function addMovietoList() {
     let movie = {}
     movie.name = document.getElementById('cardTitle').innerHTML
     movie.score = document.getElementById('score').innerHTML
@@ -109,11 +114,16 @@ function addMovietoList(id) {
     addMovietoDB(movie)
 }
 
-
-function addMovietoDB(movie) {
+document.querySelector(".card").addEventListener("dblclick", event => {
     let answer = confirm('Do you want add this movie')
     if(answer == ture){
+        addMovietoList();
     
+    
+    }
+  });
+
+function addMovietoDB(movie) {
     fetch('https://se104-project-backend.du.r.appspot.com/movies',{
         method: 'POST',
         headers: {
@@ -123,9 +133,10 @@ function addMovietoDB(movie) {
     }).then((response) => {
         return response.json()
     }).then(data => {
+        addMovietoList()
         
     })
-    }
+    
 }
 
 
