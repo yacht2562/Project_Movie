@@ -13,8 +13,7 @@ document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
     })
        .then(data => {
            console.log(id)
-            
-            addMovieList(data)
+           addMovieList(data)
 
         })
     }
@@ -25,7 +24,12 @@ document.getElementById('seacrhButton').addEventListener('click', (evnet) => {
 
 function hideall(){
     let element = document.getElementById('content')
-    element.innerHTML = ''
+    element.remove()
+    element = document.createElement('div')
+    element.setAttribute('class','row')
+    element.setAttribute('id','content')
+    let body = document.getElementById('body')
+    body.appendChild(element)
 
 }
 
@@ -57,13 +61,15 @@ function onLoad() {
 }
 
 function addMovieToCard(movie) {
+    let content = document.createElement('div')
+    content.setAttribute('class','row')
+    content.setAttribute('id','content')
     let card = document.createElement('div')
     card.setAttribute('class', 'card col-3 m-3 pe-auto')
-    card.setAttribute('ondbclick', 'addMovietoDB()')
     card.style.width = "18rem"
     let image = document.createElement('img')
     image.setAttribute('class', 'card-img-top mt-2')
-    image.setAttribute('ondbclick', 'addMovietoDB()')
+    image.setAttribute('id', 'img')
     let cardBody = document.createElement('div')
     cardBody.setAttribute('class', 'card-body')
     let cardTitle = document.createElement('h5')
@@ -108,11 +114,11 @@ function addMovieList(datas) {
 
 function addMovietoList() {
     let movie = {}
-    movie.name = document.getElementById('cardTitle').innerHTML
+    movie.img = document.getElementById('img').getAttribute('src')
     movie.score = document.getElementById('score').innerHTML
-    movie.link = document.getAttribute('herf')
-    movie.name = document.getElementById('movie.title')
-    movie.Text = document.getElementById('cardText').innerHTML
+    movie.link = document.getElementById('url').getgetAttribute('herf')
+    movie.name = document.getElementById('movie.title').innerHTML
+    movie.Text = document.getElementById('text').innerHTML
     addMovietoDB(movie)
 }
 
